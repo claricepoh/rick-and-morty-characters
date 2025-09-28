@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/client/react";
-import { CHARACTERS_QUERY } from "./graphql/queries";
+import { GET_CHARACTERS } from "./graphql/queries";
 import CharacterCell from "./components/characterCell";
 import HeaderBar from "./components/headerBar";
 import type {
-  CharacterItem,
-  CharactersInfo,
-  CharactersQueryData,
-  CharactersQueryVar,
-} from "./graphql/types";
+  GetCharactersQuery,
+  GetCharactersQueryVariables,
+  Info,
+  Character
+} from "./__generated__/types";
 
 function App() {
   const [page, setPage] = useState<number>(1);  // Initialised page state to first page
 
-  const { data, loading, error, refetch } = useQuery<CharactersQueryData, CharactersQueryVar>(
-    CHARACTERS_QUERY,
-    { variables: { page } }
+  const { data, loading, error, dataState, refetch } = 
+    useQuery<GetCharactersQuery, GetCharactersQueryVariables>(
+      GET_CHARACTERS,
+      { variables: { page } }
   );
 
-  const allCharacters: CharacterItem[] = data?.characters?.results ?? [];
-  const info: CharactersInfo | null | undefined = data?.characters?.info;
+  const allCharacters: Character[] = 
+    (data?.characters?.results?.filter((c): c is Character => c !== null) ?? []);
+  const info: Info | undefined | null = data?.characters?.info;
   const totalPages: number = info?.pages ?? 1;
 
   const handlePrev = () => {
@@ -67,7 +69,7 @@ function App() {
         </div>
       )}
 
-      {!loading && !error && allCharacters.length === 0 && (
+      {!loading && !error && dataState === "empty" && (
         <div className="p-4 bg-white rounded shadow text-gray-600">
           No characters found.
         </div>
@@ -75,7 +77,7 @@ function App() {
 
       {/* Display Character Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {allCharacters.map((c: CharacterItem) => <CharacterCell key={c.id} c={c} />)}
+        {allCharacters.map( c => <CharacterCell key={c?.id} c={c} />)}
       </div>
     </div>
   );
