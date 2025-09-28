@@ -26,7 +26,7 @@ function App() {
     if (page > 1) {
       let pageNum: number = page - 1;
       setPage(pageNum);
-      refetch({ page: pageNum }).catch(() => {});
+      refetch();
     }
   };
 
@@ -34,12 +34,14 @@ function App() {
     if (page < totalPages) {
       let pageNum: number = page + 1;
       setPage(pageNum);
-      refetch({ page: pageNum }).catch(() => {});
+      refetch();
     }
   };
 
-  console.log (data);
-  console.log (allCharacters);
+  const handleGoToPage = (targetPage: number) => {
+    setPage(targetPage);
+    refetch();
+  }
 
   return (
     <div className="p-8">
@@ -49,11 +51,27 @@ function App() {
         totalPages={totalPages}
         onPrev={handlePrev}
         onNext={handleNext}
+        onGoToPage={handleGoToPage}
       />
 
       {/* Handle Loading / Error / Empty states */}
-      {loading && <div className="status">Loading characters...</div>}
-      {error && <div className="status error">Error loading characters: {error.message}</div>}
+      {loading && (
+        <div className="p-4 bg-white rounded shadow text-gray-600">
+          Loading characters…
+        </div>
+      )}
+
+      {error && (
+        <div className="p-4 bg-white rounded shadow text-red-600">
+          Error loading characters: {error.message}
+        </div>
+      )}
+
+      {!loading && !error && allCharacters.length === 0 && (
+        <div className="p-4 bg-white rounded shadow text-gray-600">
+          No characters found.
+        </div>
+      )}
 
       {/* Display Character Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
