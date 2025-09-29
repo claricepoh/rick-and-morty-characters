@@ -44,7 +44,7 @@ const HeaderBar: React.FC<Props> = ({ page, totalPages, onPrev, onNext, onGoToPa
   return  (
     <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
       <h1 className="text-2xl font-semibold mb-6 sm:mb-0">
-        The Ricky and Morty Characters
+        The Rick and Morty Characters
       </h1>
 
       <div className="flex items-center gap-4">

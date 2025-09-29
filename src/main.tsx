@@ -7,6 +7,7 @@ import App from './App';
 /* Supported in React 18+ */
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    {/* Wrap the app with ApolloProvider, passing the configured client */}
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>

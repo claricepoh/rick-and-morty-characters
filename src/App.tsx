@@ -15,7 +15,7 @@ function App() {
   const [page, setPage] = useState<number>(1);  // Initialised page state to first page
 
   // Fetch GraphQL data
-  const { data, loading, error, dataState, refetch } = 
+  const { data, loading, error, refetch } =
     useQuery<GetCharactersQuery, GetCharactersQueryVariables>(
       GET_CHARACTERS,
       { variables: { page } }      // page variable paginated in 20 records by default
@@ -81,7 +81,7 @@ function App() {
         </div>
       )}
 
-      {!loading && !errorMessage && dataState === "empty" && (
+      {!loading && !errorMessage && allCharacters.length === 0 && (
         <div className="p-4 bg-white rounded shadow text-gray-600">
           No characters found.
         </div>
