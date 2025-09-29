@@ -11,7 +11,7 @@ Build a React/TypeScript app that fetches characters from the Rick & Morty Graph
 - Show an error message if the data fetching fails.
 
 ## Setup and Run Project
-- At terminal, Clone the github project:
+- At terminal, clone the github project:
 ```sh
 git clone git@github.com:claricepoh/rick-and-morty-characters.git
 ```
