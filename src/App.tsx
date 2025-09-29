@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/client/react";
+import { CombinedGraphQLErrors } from "@apollo/client/errors";
 import { GET_CHARACTERS } from "./graphql/queries";
 import CharacterCell from "./components/characterCell";
 import HeaderBar from "./components/headerBar";
@@ -13,16 +14,27 @@ import type {
 function App() {
   const [page, setPage] = useState<number>(1);  // Initialised page state to first page
 
+  // Fetch GraphQL data
   const { data, loading, error, dataState, refetch } = 
     useQuery<GetCharactersQuery, GetCharactersQueryVariables>(
       GET_CHARACTERS,
-      { variables: { page } }
+      { variables: { page } }      // page variable paginated in 20 records by default
   );
 
   const allCharacters: Character[] = 
     (data?.characters?.results?.filter((c): c is Character => c !== null) ?? []);
   const info: Info | undefined | null = data?.characters?.info;
   const totalPages: number = info?.pages ?? 1;
+
+   // Error handling
+  let errorMessage: string | null = null;
+  if (error) {
+    if (CombinedGraphQLErrors.is(error)) {
+      errorMessage = error.errors.map((e) => e.message).join(" | ");
+    } else {
+      errorMessage = error.message;
+    }
+  }
 
   const handlePrev = () => {
     if (page > 1) {
@@ -63,13 +75,13 @@ function App() {
         </div>
       )}
 
-      {error && (
+      {errorMessage && (
         <div className="p-4 bg-white rounded shadow text-red-600">
-          Error loading characters: {error.message}
+          {errorMessage}
         </div>
       )}
 
-      {!loading && !error && dataState === "empty" && (
+      {!loading && !errorMessage && dataState === "empty" && (
         <div className="p-4 bg-white rounded shadow text-gray-600">
           No characters found.
         </div>
