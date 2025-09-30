@@ -9,6 +9,8 @@ Build a React/TypeScript app that fetches characters from the Rick & Morty Graph
 - Display {Name, Species, Image} for each characters, with pagination 20 characters at a time. 
 - Display loading state while fetching data.
 - Show an error message if the data fetching fails.
+  
+### [Live Demo](https://master.d379xk456sangc.amplifyapp.com)
 
 ## Setup and Run Project
 - At terminal, clone the github project:
@@ -37,6 +39,23 @@ npm run dev
 ```
 - Find the localhost path, and then open [http://localhost:5173](http://localhost:5173) using web browser
 
+## Testing
+- Test Framework: [Vitest](https://vitest.dev/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [@apollo/client/testing](https://www.apollographql.com/docs/react/development-testing/testing) - mock GraphQL responses for Apollo Client component. 
+```sh
+npm run test
+
+ ✓ src/__tests__/headerBar.test.tsx (7 tests) 148ms
+ ✓ src/__tests__/characterCell.test.tsx (2 tests) 161ms
+ ✓ src/__tests__/App.test.tsx (4 tests) 348ms
+
+ Test Files  3 passed (3)
+      Tests  13 passed (13)
+   Start at  23:31:46
+   Duration  2.55s (transform 228ms, setup 353ms, collect 1.13s, tests 657ms, environment 2.24s, prepare 561ms)
+```
+
 ## Technologies
 - [Vite](https://vite.dev/)
 - [React 18](https://react.dev) + [TypeScript](https://www.typescriptlang.org/)
@@ -62,10 +81,27 @@ npm run dev
 │  ├─ components/       : Pure Components 
 │  │   ├─ characterCell.tsx
 │  │   └─ headerBar.tsx
+│  ├─ __tests__/       
 │  └─ style.css
 ```
 ## Notes
 - Rick & Morty API returns 20 per page by default.
+- For maintainability and accurarcy, use GraphQL Code Generator (`@graphql-codegen/cli` package) to auto-generate TypeScript types definition for GraphQL query response and variables.
+```sh
+npm run codegen
+```
+- Create React Application in TypeScript using Vite
+```sh
+npm create vite@latest <my-react-app> -- --template react-ts
+```
   
-## Future Works 
-- Deployment
+## Deployment
+- Deployed and hosted with AWS Amplify service. [Live Demo](https://master.d379xk456sangc.amplifyapp.com)
+- Refer documentation at (https://docs.aws.amazon.com/hands-on/latest/build-react-app-amplify-graphql/module-one.html)
+
+## Other References
+- Guide to setup GraphQL Codegen:
+  <br>(https://www.apollographql.com/docs/react/development-testing/graphql-codegen)
+  <br>(https://www.apollographql.com/tutorials/lift-off-part1/09-codegen)
+- TypeScript with GraphQL and Apollo Client: (https://www.apollographql.com/docs/react/data/typescript)
+- GraphQL Specification: (https://spec.graphql.org/draft/#sec-Type-System)
