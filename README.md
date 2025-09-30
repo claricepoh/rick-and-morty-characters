@@ -21,7 +21,8 @@ git clone git@github.com:claricepoh/rick-and-morty-characters.git
 ```sh
 cd rick-and-morty-characters
 ```
-- Within the project directory, install Node.js version 22 and above. (https://nodejs.org/en/download) 
+- Within the project directory, install Node.js version 22 and above. (https://nodejs.org/en/download)
+- Vite requires Node.js version 20.19+ or 22.12+
 ```sh
 nvm install 22
 ```
