@@ -106,3 +106,7 @@ npm create vite@latest <my-react-app> -- --template react-ts
   <br>(https://www.apollographql.com/tutorials/lift-off-part1/09-codegen)
 - TypeScript with GraphQL and Apollo Client: (https://www.apollographql.com/docs/react/data/typescript)
 - GraphQL Specification: (https://spec.graphql.org/draft/#sec-Type-System)
+
+## Future Works
+- Containerize with Docker
+- Environment variables for API URL
