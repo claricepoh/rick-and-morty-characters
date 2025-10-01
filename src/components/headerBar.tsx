@@ -90,7 +90,7 @@ const HeaderBar: React.FC<Props> = ({ page, totalPages, inputName, onPrev, onNex
           value={inputName}
           onChange={handleInputNameChange}
           placeholder="Search name..."
-          className="w-20 px-2 py-1 border rounded text-sm"
+          className="w-30 px-2 py-1 border rounded text-sm"
         />
       </div>
     </div>
