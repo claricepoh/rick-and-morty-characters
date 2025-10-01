@@ -14,10 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query GetCharacters ($page: Int!) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n": typeof types.GetCharactersDocument,
+    "\n  query GetCharacters ($page: Int!, $name: String) {\n    characters(\n    page: $page,\n    filter: {name: $name}\n    ) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n": typeof types.GetCharactersDocument,
 };
 const documents: Documents = {
-    "\n  query GetCharacters ($page: Int!) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n": types.GetCharactersDocument,
+    "\n  query GetCharacters ($page: Int!, $name: String) {\n    characters(\n    page: $page,\n    filter: {name: $name}\n    ) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n": types.GetCharactersDocument,
 };
 
 /**
@@ -37,7 +37,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetCharacters ($page: Int!) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCharacters ($page: Int!) {\n    characters(page: $page) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query GetCharacters ($page: Int!, $name: String) {\n    characters(\n    page: $page,\n    filter: {name: $name}\n    ) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCharacters ($page: Int!, $name: String) {\n    characters(\n    page: $page,\n    filter: {name: $name}\n    ) {\n      info {\n        count\n        pages\n        next\n        prev\n      }\n      results {\n        id\n        name\n        species\n        image\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

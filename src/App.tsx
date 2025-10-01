@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "@apollo/client/react";
 import { CombinedGraphQLErrors } from "@apollo/client/errors";
 import { GET_CHARACTERS } from "./graphql/queries";
@@ -13,12 +14,14 @@ import type {
 
 function App() {
   const [page, setPage] = useState<number>(1);  // Initialised page state to first page
+  const [inputName, setInputName] = useState<string>("");  // search Name filter 
+  const [debounceInputName, setDebouncedInputName] = useState<string>("");
 
   // Fetch GraphQL data
   const { data, loading, error, refetch } =
     useQuery<GetCharactersQuery, GetCharactersQueryVariables>(
       GET_CHARACTERS,
-      { variables: { page } }      // page variable paginated in 20 records by default
+      { variables: { page, name: debounceInputName } }      // page variable paginated in 20 records by default 
   );
 
   const allCharacters: Character[] = 
@@ -57,14 +60,33 @@ function App() {
     refetch();
   }
 
+  const handleSearch = (inputName: string) => {
+    setInputName(inputName);
+  }
+
+  // Effect to handle the debouncing logic
+  useEffect(() => {
+    // Set a timer to update the debounced value after a delay
+    const handleSearch = setTimeout(() => {
+      setDebouncedInputName(inputName);
+    }, 500); // 500ms debounce delay
+    
+    // Cleanup function: Clear the previous timer if inputValue changes before the delay
+    return () => {
+      clearTimeout(handleSearch);
+    };
+  }, [inputName]); // Re-run effect whenever inputValue changes
+
   return (
     <div className="p-8">
       {/* Header bar with title + pagination */}
       <HeaderBar
         page={page}
         totalPages={totalPages}
+        inputName={inputName}
         onPrev={handlePrev}
         onNext={handleNext}
+        onSearchName={handleSearch}
         onGoToPage={handleGoToPage}
       />
 

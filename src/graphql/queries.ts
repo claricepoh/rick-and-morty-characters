@@ -9,8 +9,11 @@ export const GET_CHARACTERS: TypedDocumentNode<
   GetCharactersQuery,
   GetCharactersQueryVariables
 > = gql`
-  query GetCharacters ($page: Int!) {
-    characters(page: $page) {
+  query GetCharacters ($page: Int!, $name: String) {
+    characters(
+    page: $page,
+    filter: {name: $name}
+    ) {
       info {
         count
         pages

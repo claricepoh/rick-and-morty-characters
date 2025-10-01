@@ -3,14 +3,16 @@ import React, {useState} from "react";
 interface Props {
   page: number;
   totalPages: number;
+  inputName: string; 
   onPrev: () => void;
   onNext: () => void;
   onGoToPage: (targetPage: number) => void;
+  onSearchName: (filterName: string) => void;
 };
 
-const HeaderBar: React.FC<Props> = ({ page, totalPages, onPrev, onNext, onGoToPage }) => {
+const HeaderBar: React.FC<Props> = ({ page, totalPages, inputName, onPrev, onNext, onGoToPage, onSearchName }) => {
   const [inputPage, setInputPage] = useState<string>("");
-
+  
   const handleInputPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     const pageNum = Number(val);
@@ -25,6 +27,11 @@ const HeaderBar: React.FC<Props> = ({ page, totalPages, onPrev, onNext, onGoToPa
     if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
       setInputPage(val);
     }
+  };
+
+  const handleInputNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    onSearchName(val);
   };
 
   const handleGoTo = () => {
@@ -76,6 +83,15 @@ const HeaderBar: React.FC<Props> = ({ page, totalPages, onPrev, onNext, onGoToPa
           className="px-3 py-1 rounded bg-blue-200 hover:bg-blue-300">
           Go
         </button>
+
+        {/* Name Search filter */}
+        <input
+          type="text"
+          value={inputName}
+          onChange={handleInputNameChange}
+          placeholder="Search name..."
+          className="w-20 px-2 py-1 border rounded text-sm"
+        />
       </div>
     </div>
   );
