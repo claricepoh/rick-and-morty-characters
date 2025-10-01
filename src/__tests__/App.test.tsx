@@ -45,25 +45,20 @@ describe("Appollo Client App - GraphQL Test", () => {
     expect(screen.getByText("Morty Smith")).toBeInTheDocument();
   });
 
-  it("shows combined GraphQL error messages", async () => {
-    const mockMultipleErrors = {
+  it("show error state", async () => {
+    const mockError = {
       request: { query: GET_CHARACTERS, variables: { page: 1 } },
-      result: {
-        errors: [
-          { message: "First error message" },
-          { message: "Second error message" }
-        ]
-      }
+      error: new Error("GraphQL error")
     };
 
     render(
-      <MockedProvider mocks={[mockMultipleErrors]}>
+      <MockedProvider mocks={[mockError]}>
         <App />
       </MockedProvider>
     );
 
-    expect(await screen.findByText(/First error message/)).toBeInTheDocument();
-    expect(screen.getByText(/Second error message/)).toBeInTheDocument();
+    // Error message should be present on UI
+    expect(await screen.findByText(/GraphQL error/)).toBeInTheDocument();
   });
 
   it("show multiple error messages when GraphQL query returns combined list of error objects", async () => {
